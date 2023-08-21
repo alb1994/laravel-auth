@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = Post::all();
+        $posts = Post::all();
         return view('admin.posts.index', compact('posts')); 
     }
 
@@ -49,7 +49,7 @@ class PostController extends Controller
      */
     public function show(post $post)
     {
-        //
+        return view('admin.posts.show', compact('post'));
     }
 
     /**

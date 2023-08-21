@@ -23,7 +23,7 @@
                                 <td>{{ $post->title}}</td>
                                 <td>{{ $post->Slug}}</td>
                                 <td>
-                                    <a href="#" class="btn btn-sm btn-primary">
+                                    <a href="{{route('admin.posts.show', $post->id )}}" class="btn btn-sm btn-primary">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <a href="#" class="btn btn-sm btn-warnig">
