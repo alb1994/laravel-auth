@@ -27,6 +27,7 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ route('admin.dashboard') }}">Dashboard</a>
                 <a class="navbar-brand" href="{{ route('admin.posts.index') }}">Post</a>
+                <a class="navbar-brand" href="{{ route('admin.posts.create') }}">Aggiungi Post</a>
             </div>
         </nav>
 
