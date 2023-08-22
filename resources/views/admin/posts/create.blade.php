@@ -14,7 +14,7 @@
             {{ $message }}
         @enderror
         <label class="control-label">Contenuto</label>
-        <textarea class="form-control" name="content" id="content" placeholder="Contenuto"></textarea>
+        <textarea class="form-control" name="content" id="content" placeholder="Contenuto">{{ old('content') }}</textarea>
         @error('content')
             {{ $message }}
         @enderror
