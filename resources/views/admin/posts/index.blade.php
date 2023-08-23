@@ -29,10 +29,11 @@
                             <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-sm btn-warning">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <form class="d-inline-block" action="#" method="POST">
+                            <form class="d-inline-block delete-post-form" action="{{ route('admin.posts.destroy', $post->id)}}" 
+                            method="POST" onsubmit="return confirm('Sei sicuro di voler cancellare questo post?')">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-sm btn-danger">
+                                <button class="btn btn-sm btn-danger" type="submit">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </form>
@@ -44,4 +45,5 @@
         </div>
     </div>
 </div>
+@include('admin.partials.modal_delete')
 @endsection
