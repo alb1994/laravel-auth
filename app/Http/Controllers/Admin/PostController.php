@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -37,20 +38,35 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StorepostRequest $request)
-    {
-        $form_data = $request->all();
-
-        $post = new Post();
-        $slug = $post->generateSlug($form_data['title']);
-        $form_data['slug'] = $slug;
-        $form_data['slug'] = $slug; // Assegna lo slug al campo 'slug'
+{
+    // Recupera tutti i dati dal form
+    $form_data = $request->all();
     
-        $post->fill($form_data);
-        $post->save();
+    // Crea una nuova istanza del modello Post
+    $post = new Post();
     
-        return redirect()->route('admin.posts.index');
+    // Verifica se è stata caricata un'immagine di copertina
+    if ($request->hasFile('cover_image')) {
+        // Salva l'immagine di copertina nella directory 'post_image' nell'archivio di memorizzazione
+        $path = Storage::put('post_image', $request->file('cover_image'));
+        
+        // Assegna il percorso dell'immagine di copertina ai dati del form
+        $form_data['cover_image'] = $path;
     }
-
+    
+    // Genera lo slug dal titolo e assegnalo ai dati del form
+    $slug = $post->generateSlug($form_data['title']);
+    $form_data['slug'] = $slug;
+    
+    // Compila il modello Post con i dati del form
+    $post->fill($form_data);
+    
+    // Salva il post nel database
+    $post->save();
+    
+    // Reindirizza alla pagina di visualizzazione degli indici dei post
+    return redirect()->route('admin.posts.index');
+}
     /**
      * Display the specified resource.
      *
