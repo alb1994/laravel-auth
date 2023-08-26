@@ -96,15 +96,23 @@ class PostController extends Controller
      * @param  \App\Models\post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatepostRequest $request, post $post)
+    public function update(UpdatepostRequest $request, Post $post)
     {
         $form_data = $request->all();
-
-        $form_data['slug'] = $post->generateSlug($form_data['title']);
-
+    
+        if ($request->hasFile('cover_image')) {
+            if ($post->cover_image) {
+                Storage::delete($post->cover_image);
+            }
+            $path = Storage::put('post_image', $request->cover_image);
+            $form_data['cover_image'] = $path;
+        }
+    
+        $slug = $post->generateSlug($form_data['title']);
+        $form_data['slug'] = $slug;
+    
         $post->update($form_data);
-        $post->save();
-
+    
         return redirect()->route('admin.posts.index');
     }
 
